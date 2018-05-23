@@ -34,4 +34,7 @@ dependencies {
 
     // Guava
     implementation 'com.google.guava:guava:18.0'
+
+    //bottom navigation bar
+    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
 }

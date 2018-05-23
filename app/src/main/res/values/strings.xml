@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MusicProject</string>
+    <string name="bottomnavigation_home_tab">Trang chủ</string>
+    <string name="bottomnavigation_me_tab">Cá nhân</string>
+    <string name="bottomnavigation_infor_tab">Thông tin</string>
+
 </resources>

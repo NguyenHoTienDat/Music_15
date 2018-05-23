@@ -23,4 +23,12 @@ public final class Constant {
     public static final int CONNECT_TIME_OUT = 5000; /*milliseconds*/
     public static final String BREAK_LINE_CHAR = "\n";
 
+    /**
+     * Tab postion in MainActivity
+     */
+
+    public static final int TAB_HOME_POSITION = 0;
+    public static final int TAB_ME_POSITION = 1;
+    public static final int TAB_INFORMATION_POSITION = 2;
+
 }
