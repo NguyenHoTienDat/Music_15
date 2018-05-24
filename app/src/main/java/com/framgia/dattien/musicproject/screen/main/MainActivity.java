@@ -85,15 +85,15 @@ public class MainActivity extends BasicActivity
     @Override
     public void onChangeTabClick(int tabPosition) {
         switch (tabPosition) {
-            case Constant.TAB_HOME_POSITION: {
+            case TabLevel.TAB_HOME: {
                 findOrCreateFragment(mHomeFragment, HomeFragment.HOME_FRG_TAG);
                 return;
             }
-            case Constant.TAB_ME_POSITION: {
+            case TabLevel.TAB_ME: {
                 findOrCreateFragment(mMeFragment, MeFragment.ME_FRG_TAG);
                 return;
             }
-            case Constant.TAB_INFORMATION_POSITION: {
+            case TabLevel.TAB_INFOR: {
                 findOrCreateFragment(mInforFragment, InforFragment.INFOR_FRG_TAG);
                 return;
             }
