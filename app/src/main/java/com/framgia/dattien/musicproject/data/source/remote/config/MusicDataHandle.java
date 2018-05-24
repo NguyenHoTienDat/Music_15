@@ -68,7 +68,8 @@ public class MusicDataHandle {
             //user.setFullName(checkNotNull(jsonUserObject.optString("full_name")));
             user.setUserName(jsonUserObject.optString(User.UserEntry.USER_USERNAME));
 
-            song = new Song.SongBuilder(jsonObject.optInt(Song.SongEntry.SONG_ID))
+            song = new Song.SongBuilder()
+                    .setId(jsonObject.optInt(Song.SongEntry.SONG_ID))
                     .setArtworkUrl(jsonObject.optString(Song.SongEntry.SONG_ARTWORK_URL))
                     .setDescription(jsonObject.optString(Song.SongEntry.SONG_DESCRIPTION))
                     .setDownloadable(jsonObject.optBoolean(Song.SongEntry.SONG_DOWNLOADABLE))
