@@ -1,10 +1,11 @@
 package com.framgia.dattien.musicproject.data.repository;
 
 import android.support.annotation.NonNull;
-
+import com.framgia.dattien.musicproject.data.model.Genre;
 import com.framgia.dattien.musicproject.data.source.MusicDataSource;
 import com.framgia.dattien.musicproject.data.source.local.MusicLocalDataSource;
 import com.framgia.dattien.musicproject.data.source.remote.MusicRemoteDataSource;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,7 +13,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by tiendatbkhn on 22/05/2018.
  */
 
-public class MusicRepository implements MusicDataSource.RemoteDataSource, MusicDataSource.LocalDataSource {
+public class MusicRepository implements MusicDataSource.RemoteDataSource,
+        MusicDataSource.LocalDataSource {
 
     private static MusicRepository mInstance;
 
@@ -55,5 +57,10 @@ public class MusicRepository implements MusicDataSource.RemoteDataSource, MusicD
     public void getSongsByFilter(String filterName, int offset,
                                  int limit, MusicDataSource.FetchDataCallback callback) {
         mMusicRemoteDataSource.getSongsByFilter(filterName, offset, limit, callback);
+    }
+
+    @Override
+    public List<Genre> makeGenes() {
+        return mMusicLocalDataSource.makeGenes();
     }
 }

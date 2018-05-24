@@ -7,4 +7,10 @@
     <string name="genre_music">Nhạc theo chủ đề</string>
     <string name="top_music">Nhạc hot</string>
     <string name="action_see_more">Xem thêm</string>
+    <string name="all_music_genre">All music</string>
+    <string name="all_audio_genre">All audio</string>
+    <string name="alternativerock_genre">Nhạc rock</string>
+    <string name="ambient_genre">Nhạc không lời</string>
+    <string name="classical_genre">Nhạc cổ điển</string>
+    <string name="country_genre">Nhạc đồng quê</string>
 </resources>
