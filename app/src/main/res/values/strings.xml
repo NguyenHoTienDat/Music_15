@@ -3,5 +3,8 @@
     <string name="bottomnavigation_home_tab">Trang chủ</string>
     <string name="bottomnavigation_me_tab">Cá nhân</string>
     <string name="bottomnavigation_infor_tab">Thông tin</string>
-
+    <string name="main_search">Tìm kiếm</string>
+    <string name="genre_music">Nhạc theo chủ đề</string>
+    <string name="top_music">Nhạc hot</string>
+    <string name="action_see_more">Xem thêm</string>
 </resources>

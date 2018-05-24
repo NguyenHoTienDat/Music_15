@@ -3,4 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_porcelain_transparent">#8be7e8ea</color>
+    <color name="color_mischka">#e2e2e9</color>
 </resources>
