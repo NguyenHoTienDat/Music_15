@@ -1,16 +1,19 @@
 package com.framgia.dattien.musicproject.data.source;
 
+import com.framgia.dattien.musicproject.data.model.Genre;
+import java.util.List;
+
 /**
  * Created by tiendatbkhn on 22/05/2018.
  */
 
 public interface MusicDataSource {
 
-    public interface LocalDataSource {
-
+    interface LocalDataSource {
+        List<Genre> makeGenes();
     }
 
-    public interface RemoteDataSource {
+    interface RemoteDataSource {
         void getSongsByGenre(String genre, int offset,
                              int limit, FetchDataCallback callback);
 
@@ -18,7 +21,7 @@ public interface MusicDataSource {
                               int limit, FetchDataCallback callback);
     }
 
-    public interface FetchDataCallback<T> {
+    interface FetchDataCallback<T> {
         void onDataFetchSuccess(T data);
 
         void onDataFetchFailed(String mes);
