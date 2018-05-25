@@ -3,6 +3,7 @@ package com.framgia.dattien.musicproject.screen.main;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.framgia.dattien.musicproject.R;
@@ -11,7 +12,6 @@ import com.framgia.dattien.musicproject.screen.BasicActivity;
 import com.framgia.dattien.musicproject.screen.main.homefragment.HomeFragment;
 import com.framgia.dattien.musicproject.screen.main.inforfragment.InforFragment;
 import com.framgia.dattien.musicproject.screen.main.mefragment.MeFragment;
-import com.framgia.dattien.musicproject.utils.Constant;
 
 public class MainActivity extends BasicActivity
         implements MainContract.View, AHBottomNavigation.OnTabSelectedListener {
@@ -115,7 +115,7 @@ public class MainActivity extends BasicActivity
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (!findExistFragment(fragmentTag)) {
-            transaction.add(R.id.frame_contain, baseFragment, fragmentTag);
+            transaction.replace(R.id.frame_contain, baseFragment, fragmentTag);
             transaction.addToBackStack(fragmentTag);
             transaction.commit();
         } else {
