@@ -10,8 +10,8 @@ import android.support.annotation.StringDef;
         GenreLevel.GENRE_ALTERNATIVEROCK, GenreLevel.GENRE_AMBIENT,
         GenreLevel.GENRE_CLASSICAL, GenreLevel.GENRE_COUNTRY})
 public @interface GenreLevel {
-    String GENRE_ALL_MUSIC = "all_music";
-    String GENRE_ALL_AUDIO = "all_audio";
+    String GENRE_ALL_MUSIC = "all-music";
+    String GENRE_ALL_AUDIO = "all-audio";
     String GENRE_ALTERNATIVEROCK = "alternativerock";
     String GENRE_AMBIENT = "ambient";
     String GENRE_CLASSICAL = "classical";
