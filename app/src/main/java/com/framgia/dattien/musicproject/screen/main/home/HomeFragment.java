@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.homefragment;
+package com.framgia.dattien.musicproject.screen.main.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,14 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Genre;
+import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.data.repository.MusicRepository;
 import com.framgia.dattien.musicproject.data.source.local.MusicLocalDataSource;
 import com.framgia.dattien.musicproject.data.source.remote.MusicRemoteDataSource;
 import com.framgia.dattien.musicproject.screen.BaseFragment;
-import com.framgia.dattien.musicproject.screen.BaseRecyclerViewAdapter;
+import com.framgia.dattien.musicproject.screen.genredetails.GenreActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +27,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class HomeFragment extends BaseFragment
-        implements HomeContract.View, BaseRecyclerViewAdapter.OnItemClickListener<Genre> {
+        implements HomeContract.View, SongAdapter.OnSongItemClickListener,
+        GenreAdapter.OnGenreItemClickListener {
 
     public static final String HOME_FRG_TAG = "HomeFragment";
 
     private static HomeFragment mNewInstance;
     private HomeContract.Presenter mPresenter;
     private GenreAdapter mGenreAdapter;
+    private SongAdapter mSongAdapter;
 
     private RecyclerView mRecyclerViewGenre;
+    private RecyclerView mRecyclerViewSong;
 
     public static HomeFragment getInstance() {
         if (mNewInstance == null) {
@@ -56,15 +61,23 @@ public class HomeFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home,
+                container, false);
+        bindView(view);
+        initComponents();
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        bindView();
-        initComponents();
+    public void onStart() {
+        super.onStart();
         mPresenter.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mPresenter.onStop();
+        super.onStop();
     }
 
     @Override
@@ -72,18 +85,39 @@ public class HomeFragment extends BaseFragment
         checkNotNull(mGenreAdapter).updateData(genres);
     }
 
-    public void bindView() {
-        mRecyclerViewGenre = getView().findViewById(R.id.rv_genre_music);
+    @Override
+    public void updateHotSongs(List<Song> songs) {
+        checkNotNull(mSongAdapter).updateData(songs);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemGenreClick(View v, Genre genre, int position) {
+        startActivity(GenreActivity.getGenreIntent(getActivity(),genre));
+    }
+
+    @Override
+    public void onItemSongClick(View v, Song song, int position) {
+
+    }
+
+    public void bindView(View view) {
+        mRecyclerViewGenre = view.findViewById(R.id.rv_genre_music);
+        mRecyclerViewSong = view.findViewById(R.id.rv_hot_music);
     }
 
     public void initComponents() {
         mGenreAdapter = new GenreAdapter(getContext(),
                 new ArrayList<Genre>(), this);
         mRecyclerViewGenre.setAdapter(mGenreAdapter);
-    }
 
-    @Override
-    public void onItemClick(View view, Genre data, int position) {
-
+        mSongAdapter = new SongAdapter(getContext(),
+                new ArrayList<Song>(), this);
+        mRecyclerViewSong.setAdapter(mSongAdapter);
+        mRecyclerViewSong.setNestedScrollingEnabled(false);
     }
 }

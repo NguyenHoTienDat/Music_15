@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.homefragment;
+package com.framgia.dattien.musicproject.screen.main.home;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -26,10 +26,10 @@ public class GenreAdapter extends BaseRecyclerViewAdapter<GenreAdapter.GenreHold
 
     private Context mContext;
     private List<Genre> mGenres;
-    private OnItemClickListener<Genre> mOnItemClickListener;
+    private OnGenreItemClickListener mOnItemClickListener;
 
     public GenreAdapter(@NonNull Context context, List<Genre> genres,
-                        OnItemClickListener<Genre> onItemClickListener) {
+                        OnGenreItemClickListener onItemClickListener) {
         super(context);
         mContext = context;
         mGenres = genres;
@@ -64,13 +64,13 @@ public class GenreAdapter extends BaseRecyclerViewAdapter<GenreAdapter.GenreHold
 
         private Context mContext;
         private Genre mGenre;
-        private OnItemClickListener<Genre> mOnItemClickListener;
+        private OnGenreItemClickListener mOnItemClickListener;
 
         private TextView mTextGenreName;
         private ImageView mImageGenre;
 
         public GenreHolder(View itemView, Context context,
-                           OnItemClickListener<Genre> onItemClickListener) {
+                           OnGenreItemClickListener onItemClickListener) {
             super(itemView);
             mContext = context;
             mTextGenreName = itemView.findViewById(R.id.text_item_genre_name);
@@ -90,7 +90,11 @@ public class GenreAdapter extends BaseRecyclerViewAdapter<GenreAdapter.GenreHold
 
         @Override
         public void onClick(View v) {
-            checkNotNull(mOnItemClickListener).onItemClick(v, mGenre, getAdapterPosition());
+            checkNotNull(mOnItemClickListener).onItemGenreClick(v, mGenre, getAdapterPosition());
         }
+    }
+
+    public interface OnGenreItemClickListener {
+        void onItemGenreClick(View v, Genre genre, int position);
     }
 }
