@@ -24,11 +24,12 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GenreActivity extends BasicActivity implements GenreContract.View,
-        SongDetailsAdapter.OnSongDetailsItemClickListener {
+        SongDetailsAdapter.OnSongDetailsItemClickListener, View.OnClickListener {
 
     private static final String ARGUMENT_GENRE = "ARGUMENT_GENRE";
 
     private ImageView mImageGenre;
+    private ImageView mImageBack;
     private TextView mTextActionPlayGenre;
     private RecyclerView mRecyclerViewGenreSongs;
 
@@ -47,6 +48,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_genre);
         bindView();
+        registerListener();
         getGenre();
 
         MusicRepository musicRepository =
@@ -73,6 +75,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     public void bindView() {
         mRecyclerViewGenreSongs = findViewById(R.id.rv_genre_songs);
         mImageGenre = findViewById(R.id.image_genre);
+        mImageBack = findViewById(R.id.image_genre_back);
         mTextActionPlayGenre = findViewById(R.id.text_play_genre);
     }
 
@@ -80,6 +83,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     public void initPresenter(MusicRepository musicRepository) {
         mPresenter = new GenrePresenter(musicRepository);
         mPresenter.setView(this);
+        mPresenter.setGenre(mGenre);
     }
 
     @Override
@@ -102,6 +106,21 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_genre_back:
+                finish();
+                break;
+
+            case R.id.text_play_genre:
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public void getGenre() {
         checkNotNull(getIntent().getParcelableExtra(ARGUMENT_GENRE));
         mGenre = getIntent().getParcelableExtra(ARGUMENT_GENRE);
@@ -116,5 +135,10 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
         Glide.with(this).load(mGenre.getGenreAvatar())
                 .placeholder(R.drawable.ic_head_phone)
                 .into(mImageGenre);
+    }
+
+    public void registerListener() {
+        mImageBack.setOnClickListener(this);
+        mTextActionPlayGenre.setOnClickListener(this);
     }
 }

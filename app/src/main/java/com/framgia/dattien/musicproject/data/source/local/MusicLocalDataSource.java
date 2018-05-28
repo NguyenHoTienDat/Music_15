@@ -33,15 +33,15 @@ public class MusicLocalDataSource implements MusicDataSource.LocalDataSource {
     public List<Genre> makeGenes() {
         List<Genre> genres = new ArrayList<>();
         genres.add(new Genre(mContext.getString(R.string.alternativerock_genre),
-                R.drawable.rock_banner));
+                R.drawable.rock_banner, GenreLevel.GENRE_ALTERNATIVEROCK));
         genres.add(new Genre(mContext.getString(R.string.ambient_genre),
-                R.drawable.ambient_banner));
+                R.drawable.ambient_banner, GenreLevel.GENRE_AMBIENT));
         genres.add(new Genre(mContext.getString(R.string.classical_genre),
-                R.drawable.classical_banner));
+                R.drawable.classical_banner, GenreLevel.GENRE_CLASSICAL));
         genres.add(new Genre(mContext.getString(R.string.country_genre),
-                R.drawable.country_banner));
+                R.drawable.country_banner, GenreLevel.GENRE_COUNTRY));
         genres.add(new Genre(mContext.getString(R.string.all_audio_genre),
-                R.drawable.all_music_banner));
+                R.drawable.all_music_banner, GenreLevel.GENRE_ALL_AUDIO));
         return genres;
     }
 }

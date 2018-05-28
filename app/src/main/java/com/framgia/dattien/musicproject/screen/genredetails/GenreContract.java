@@ -1,6 +1,6 @@
 package com.framgia.dattien.musicproject.screen.genredetails;
 
-import com.framgia.dattien.musicproject.data.model.GenreLevel;
+import com.framgia.dattien.musicproject.data.model.Genre;
 import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.data.repository.MusicRepository;
 import com.framgia.dattien.musicproject.screen.BasePresenter;
@@ -25,7 +25,10 @@ public interface GenreContract {
 
     interface Presenter extends BasePresenter<GenreContract.View> {
 
-        void getSongsByGenre(@GenreLevel String genreName, int genreOffset);
+        void getSongsByGenre();
 
+        void setGenre(Genre genre);
+
+        List<Song> getCurrentSongs();
     }
 }
