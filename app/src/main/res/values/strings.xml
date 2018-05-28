@@ -13,4 +13,5 @@
     <string name="ambient_genre">Nhạc không lời</string>
     <string name="classical_genre">Nhạc cổ điển</string>
     <string name="country_genre">Nhạc đồng quê</string>
+    <string name="action_play_genre_list">PHÁT DANH SÁCH</string>
 </resources>

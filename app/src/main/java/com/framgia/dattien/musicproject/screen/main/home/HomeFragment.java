@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.homefragment;
+package com.framgia.dattien.musicproject.screen.main.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +15,7 @@ import com.framgia.dattien.musicproject.data.repository.MusicRepository;
 import com.framgia.dattien.musicproject.data.source.local.MusicLocalDataSource;
 import com.framgia.dattien.musicproject.data.source.remote.MusicRemoteDataSource;
 import com.framgia.dattien.musicproject.screen.BaseFragment;
+import com.framgia.dattien.musicproject.screen.genredetails.GenreActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +65,19 @@ public class HomeFragment extends BaseFragment
                 container, false);
         bindView(view);
         initComponents();
-        mPresenter.onStart();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mPresenter.onStop();
+        super.onStop();
     }
 
     @Override
@@ -83,6 +95,16 @@ public class HomeFragment extends BaseFragment
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onItemGenreClick(View v, Genre genre, int position) {
+        startActivity(GenreActivity.getGenreIntent(getActivity(),genre));
+    }
+
+    @Override
+    public void onItemSongClick(View v, Song song, int position) {
+
+    }
+
     public void bindView(View view) {
         mRecyclerViewGenre = view.findViewById(R.id.rv_genre_music);
         mRecyclerViewSong = view.findViewById(R.id.rv_hot_music);
@@ -97,15 +119,5 @@ public class HomeFragment extends BaseFragment
                 new ArrayList<Song>(), this);
         mRecyclerViewSong.setAdapter(mSongAdapter);
         mRecyclerViewSong.setNestedScrollingEnabled(false);
-    }
-
-    @Override
-    public void onItemGenreClick(View v, Genre genre, int position) {
-
-    }
-
-    @Override
-    public void onItemSongClick(View v, Song song, int position) {
-
     }
 }

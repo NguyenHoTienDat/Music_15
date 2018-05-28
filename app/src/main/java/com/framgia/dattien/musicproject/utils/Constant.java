@@ -25,4 +25,5 @@ public final class Constant {
 
     public static final int LIMIT = 15;
     public static final int OFFSET = 0;
+
 }

@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.homefragment;
+package com.framgia.dattien.musicproject.screen.main.home;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

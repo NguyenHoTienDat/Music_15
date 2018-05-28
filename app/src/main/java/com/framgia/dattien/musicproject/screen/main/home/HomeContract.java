@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.homefragment;
+package com.framgia.dattien.musicproject.screen.main.home;
 
 import com.framgia.dattien.musicproject.data.model.Genre;
 import com.framgia.dattien.musicproject.data.model.Song;

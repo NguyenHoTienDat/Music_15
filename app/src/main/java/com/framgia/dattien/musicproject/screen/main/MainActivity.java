@@ -9,7 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.screen.BaseFragment;
 import com.framgia.dattien.musicproject.screen.BasicActivity;
-import com.framgia.dattien.musicproject.screen.main.homefragment.HomeFragment;
+import com.framgia.dattien.musicproject.screen.main.home.HomeFragment;
 import com.framgia.dattien.musicproject.screen.main.inforfragment.InforFragment;
 import com.framgia.dattien.musicproject.screen.main.mefragment.MeFragment;
 
