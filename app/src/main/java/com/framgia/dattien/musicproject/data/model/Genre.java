@@ -10,15 +10,18 @@ import android.os.Parcelable;
 public class Genre implements Parcelable{
     private String mGenreName;
     private int mGenreAvatar;
+    private String mRequestKey;
 
-    public Genre(String genreName, int genreAvatar) {
+    public Genre(String genreName, int genreAvatar, String requestKey) {
         mGenreName = genreName;
         mGenreAvatar = genreAvatar;
+        mRequestKey = requestKey;
     }
 
     protected Genre(Parcel in) {
         mGenreName = in.readString();
         mGenreAvatar = in.readInt();
+        mRequestKey = in.readString();
     }
 
     public static final Creator<Genre> CREATOR = new Creator<Genre>() {
@@ -42,6 +45,7 @@ public class Genre implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mGenreName);
         dest.writeInt(mGenreAvatar);
+        dest.writeString(mRequestKey);
     }
 
     public String getGenreName() {
@@ -58,5 +62,13 @@ public class Genre implements Parcelable{
 
     public void setGenreAvatar(int genreAvatar) {
         mGenreAvatar = genreAvatar;
+    }
+
+    public String getRequestKey() {
+        return mRequestKey;
+    }
+
+    public void setRequestKey(String requestKey) {
+        mRequestKey = requestKey;
     }
 }

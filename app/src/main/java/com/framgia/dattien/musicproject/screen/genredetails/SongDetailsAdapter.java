@@ -71,6 +71,7 @@ public class SongDetailsAdapter
         private TextView mTextSinger;
         private TextView mTextListenCount;
         private ImageView mImageSong;
+        private ImageView mImagePlayingGif;
 
         public SongDetailsHolder(View itemView, Context context,
                                  OnSongDetailsItemClickListener onItemClickListener) {
@@ -80,20 +81,9 @@ public class SongDetailsAdapter
             mTextSinger = itemView.findViewById(R.id.text_item_song_singer);
             mTextListenCount = itemView.findViewById(R.id.text_item_listen_count);
             mImageSong = itemView.findViewById(R.id.image_item_song);
+            mImagePlayingGif = itemView.findViewById(R.id.image_item_play_gif);
             mOnItemClickListener = onItemClickListener;
             itemView.setOnClickListener(this);
-        }
-
-        public void setData(Song song) {
-            checkNotNull(song);
-            mSong = song;
-
-            mTextSongTitle.setText(mSong.getTitle());
-            mTextSinger.setText(mSong.getUser().getUserName());
-            mTextListenCount.setText(mSong.getPlaybackCount() + "");
-            Glide.with(mContext).load(mSong.getArtworkUrl())
-                    .placeholder(R.drawable.ic_head_phone)
-                    .into(mImageSong);
         }
 
         @Override
@@ -109,6 +99,26 @@ public class SongDetailsAdapter
                     break;
             }
         }
+
+        public void setData(Song song) {
+            checkNotNull(song);
+            mSong = song;
+
+            mTextSongTitle.setText(mSong.getTitle());
+            mTextSinger.setText(mSong.getUser().getUserName());
+            mTextListenCount.setText(mSong.getPlaybackCount() + "");
+            Glide.with(mContext).load(mSong.getArtworkUrl())
+                    .placeholder(R.drawable.ic_head_phone)
+                    .into(mImageSong);
+
+            Glide.with(mContext)
+                    .load(R.drawable.gif_playing)
+                    .asGif()
+                    .placeholder(R.drawable.ic_head_phone)
+                    .crossFade()
+                    .into(mImagePlayingGif);
+        }
+
     }
 
     public interface OnSongDetailsItemClickListener {
