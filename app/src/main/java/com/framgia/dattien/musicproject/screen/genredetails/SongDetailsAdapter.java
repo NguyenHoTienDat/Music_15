@@ -28,6 +28,9 @@ public class SongDetailsAdapter
     private Context mContext;
     private List<Song> mSongs;
     private OnSongDetailsItemClickListener mOnItemClickListener;
+    private boolean mIsDraw;
+    private int mCurrentSongPosition;
+    private int mPreviousSongPosition;
 
     public SongDetailsAdapter(@NonNull Context context, List<Song> songs,
                               OnSongDetailsItemClickListener onItemClickListener) {
@@ -35,6 +38,7 @@ public class SongDetailsAdapter
         mContext = context;
         mSongs = songs;
         mOnItemClickListener = onItemClickListener;
+        mPreviousSongPosition = -1;
     }
 
     @Override
@@ -46,7 +50,11 @@ public class SongDetailsAdapter
 
     @Override
     public void onBindViewHolder(SongDetailsHolder holder, int position) {
-        holder.setData(mSongs.get(position));
+        if (!mIsDraw) {
+            holder.setData(mSongs.get(position));
+        } else {
+            holder.setData(mSongs.get(position), mCurrentSongPosition);
+        }
     }
 
     @Override
@@ -58,6 +66,18 @@ public class SongDetailsAdapter
         mSongs.clear();
         mSongs.addAll(songs);
         notifyDataSetChanged();
+    }
+
+    public void updateDrawItem(int currentPosition) {
+        mIsDraw = true;
+        int temp = mPreviousSongPosition;
+        mPreviousSongPosition = mCurrentSongPosition;
+        mCurrentSongPosition = currentPosition;
+        if (temp != -1) {
+            notifyItemChanged(temp);
+            notifyItemChanged(mPreviousSongPosition);
+        }
+        notifyItemChanged(mCurrentSongPosition);
     }
 
     static class SongDetailsHolder extends RecyclerView.ViewHolder
@@ -100,7 +120,7 @@ public class SongDetailsAdapter
             }
         }
 
-        public void setData(Song song) {
+        public void setData(Song song, int position) {
             checkNotNull(song);
             mSong = song;
 
@@ -111,12 +131,34 @@ public class SongDetailsAdapter
                     .placeholder(R.drawable.ic_head_phone)
                     .into(mImageSong);
 
-            Glide.with(mContext)
-                    .load(R.drawable.gif_playing)
-                    .asGif()
+            if (position == getAdapterPosition()) {
+                mTextSongTitle.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+                mTextSongTitle.setSelected(true);
+
+                Glide.with(mContext)
+                        .load(R.drawable.gif_playing)
+                        .asGif()
+                        .placeholder(R.drawable.ic_head_phone)
+                        .crossFade()
+                        .into(mImagePlayingGif);
+                mImagePlayingGif.setVisibility(View.VISIBLE);
+            } else {
+                mTextSongTitle.setTextColor(mContext.getResources().getColor(android.R.color.black));
+                mTextSongTitle.setSelected(false);
+                mImagePlayingGif.setVisibility(View.GONE);
+            }
+        }
+
+        public void setData(Song song) {
+            checkNotNull(song);
+            mSong = song;
+
+            mTextSongTitle.setText(mSong.getTitle());
+            mTextSinger.setText(mSong.getUser().getUserName());
+            mTextListenCount.setText(mSong.getPlaybackCount() + "");
+            Glide.with(mContext).load(mSong.getArtworkUrl())
                     .placeholder(R.drawable.ic_head_phone)
-                    .crossFade()
-                    .into(mImagePlayingGif);
+                    .into(mImageSong);
         }
 
     }

@@ -3,18 +3,25 @@ package com.framgia.dattien.musicproject.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
+import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.screen.musicplay.MediaOperator;
 import com.framgia.dattien.musicproject.screen.musicplay.MediaState;
+import com.framgia.dattien.musicproject.screen.musicplay.MusicPlayerActivity;
 import com.framgia.dattien.musicproject.screen.musicplay.RepeatState;
 import com.framgia.dattien.musicproject.screen.musicplay.ScheduleMode;
 import com.framgia.dattien.musicproject.screen.musicplay.ShuffleState;
@@ -53,6 +60,9 @@ public class MusicPlayerService extends Service implements MediaOperator.OnMedia
     private OnPlaySeriveListener mOnPlaySeriveListener;
     private MediaOperator mMediaOperator;
     private NotificationChannel mChannel;
+    private Song mCurrentSong;
+    private List<Song> mSongs;
+    private int mCurrentSongPosition;
 
     /**
      * Get the intent trigger play song
@@ -198,6 +208,15 @@ public class MusicPlayerService extends Service implements MediaOperator.OnMedia
         mMediaOperator.setRepeatState(repeatState);
     }
 
+    public List<Song> getSongs() {
+        checkNotNull(mSongs);
+        return mSongs;
+    }
+
+    public int getPositionSongInList() {
+        return mCurrentSongPosition;
+    }
+
     private void handleIntent(Intent intent) {
         String action = intent != null ? intent.getAction() : null;
         if (action == null) {
@@ -232,7 +251,15 @@ public class MusicPlayerService extends Service implements MediaOperator.OnMedia
     }
 
     private Notification createNotification() {
-        return null;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.music_banner);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(
+                        R.drawable.ic_head_phone)
+                        .setContentTitle(mCurrentSong.getTitle())
+                        .setLargeIcon(bitmap)
+                        .setContentText(mCurrentSong.getUser().getUserName())
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        return builder.build();
     }
 
     private void updateNotification() {
@@ -242,10 +269,11 @@ public class MusicPlayerService extends Service implements MediaOperator.OnMedia
     private void handleStartAction(Intent intent) {
         Bundle bundle = intent.getExtras().getBundle(Constant.BUNDLE_MUSICS);
         checkNotNull(bundle);
+        mSongs = bundle.getParcelableArrayList(Constant.ARGUMENT_MUSICS);
+        mCurrentSongPosition = bundle.getInt(Constant.ARGUMENT_MUSIC_POSITION, 0);
+        mCurrentSong = mSongs.get(mCurrentSongPosition);
         startForeground(ID_NOTIFICATION, createNotification());
-        List<Song> songs = bundle.getParcelableArrayList(Constant.ARGUMENT_MUSICS);
-        int currentPos = bundle.getInt(Constant.ARGUMENT_MUSIC_POSITION, 0);
-        playSong(songs, currentPos);
+        playSong(mSongs, mCurrentSongPosition);
     }
 
     private void handleScheduleAction(Intent intent) {

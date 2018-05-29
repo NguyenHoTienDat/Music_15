@@ -39,6 +39,7 @@ public class Song implements Parcelable {
         mDownloadCount = in.readInt();
         mLikesCount = in.readInt();
         mPlaybackCount = in.readInt();
+        mUser = in.readParcelable(User.class.getClassLoader());
     }
 
     public static final Creator<Song> CREATOR = new Creator<Song>() {
@@ -171,6 +172,7 @@ public class Song implements Parcelable {
         dest.writeInt(mDownloadCount);
         dest.writeInt(mLikesCount);
         dest.writeInt(mPlaybackCount);
+        dest.writeParcelable(mUser,flags);
     }
 
     public static class SongEntry {
