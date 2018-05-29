@@ -14,4 +14,13 @@
     <string name="classical_genre">Nhạc cổ điển</string>
     <string name="country_genre">Nhạc đồng quê</string>
     <string name="action_play_genre_list">PHÁT DANH SÁCH</string>
+    <string name="current_list">DANH SÁCH HIỆN TẠI</string>
+    <string name="default_duration">00:00</string>
+    <string name="media_waiting">Đang lấy dữ liệu bài hát</string>
+    <string name="media_time_schedule">Hẹn giờ</string>
+    <string name="media_time_ten_seconds">10 seconds</string>
+    <string name="media_time_twenty_seconds">20 seconds</string>
+    <string name="media_time_one_minute">1 minute</string>
+    <string name="media_time_two_minutes">2 minutes</string>
+    <string name="action_allow">Đồng ý</string>
 </resources>
