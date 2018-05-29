@@ -3,6 +3,8 @@ package com.framgia.dattien.musicproject.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.framgia.dattien.musicproject.utils.StringUtils;
+
 /**
  * Created by tiendatbkhn on 22/05/2018.
  */
@@ -50,6 +52,10 @@ public class Song implements Parcelable {
             return new Song[size];
         }
     };
+
+    public String getUriConvert() {
+        return StringUtils.getUriConvert(this.mUri);
+    }
 
     public int getId() {
         return mId;
