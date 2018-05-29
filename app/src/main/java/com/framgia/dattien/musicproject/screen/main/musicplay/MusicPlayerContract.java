@@ -9,7 +9,7 @@ import java.util.List;
  * Created by tiendatbkhn on 29/05/2018.
  */
 
-public interface MusicPlayContract {
+public interface MusicPlayerContract {
 
     interface View {
 

@@ -9,7 +9,7 @@ import com.framgia.dattien.musicproject.screen.BasicActivity;
  * Created by tiendatbkhn on 29/05/2018.
  */
 
-public class MusicPlayActivity extends BasicActivity {
+public class MusicPlayerActivity extends BasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

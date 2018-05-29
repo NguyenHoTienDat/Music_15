@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screen.main.musicplay.MusicPlayActivity">
+    tools:context=".screen.main.musicplay.MusicPlayerActivity">
 
     <ImageView
         android:id="@+id/image_song_back_collapse"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/image_song_back_collapse" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_current_list"
+        android:id="@+id/recycler_current_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/dp_8"
@@ -347,7 +347,7 @@
             android:id="@+id/constraint_schedule_contain"
             android:layout_width="@dimen/dp_250"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/dp_8"
             android:background="@drawable/shape_gray_border"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
