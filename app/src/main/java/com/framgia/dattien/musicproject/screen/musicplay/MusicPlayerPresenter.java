@@ -1,4 +1,4 @@
-package com.framgia.dattien.musicproject.screen.main.musicplay;
+package com.framgia.dattien.musicproject.screen.musicplay;
 
 /**
  * Created by tiendatbkhn on 29/05/2018.
