@@ -17,6 +17,8 @@ import com.framgia.dattien.musicproject.data.repository.MusicRepository;
 import com.framgia.dattien.musicproject.data.source.local.MusicLocalDataSource;
 import com.framgia.dattien.musicproject.data.source.remote.MusicRemoteDataSource;
 import com.framgia.dattien.musicproject.screen.BasicActivity;
+import com.framgia.dattien.musicproject.screen.musicplay.MusicPlayerActivity;
+import com.framgia.dattien.musicproject.service.MusicPlayerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     private Genre mGenre;
     private GenreContract.Presenter mPresenter;
     private SongDetailsAdapter mSongAdapter;
+    private List<Song> mSongs;
 
     public static Intent getGenreIntent(Context context, Genre genre) {
         Intent intent = new Intent(context, GenreActivity.class);
@@ -89,6 +92,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     @Override
     public void updateSongsByGenre(List<Song> songs) {
         mSongAdapter.updateData(songs);
+        mSongs = songs;
     }
 
     @Override
@@ -98,7 +102,8 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
 
     @Override
     public void onSongItemCLick(View v, Song song, int position) {
-
+        playSong(mSongs, position);
+        startActivity(MusicPlayerActivity.getMusicPlayerScreenIntent(this));
     }
 
     @Override
@@ -140,5 +145,10 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     public void registerListener() {
         mImageBack.setOnClickListener(this);
         mTextActionPlayGenre.setOnClickListener(this);
+    }
+
+    private void playSong(List<Song> songs, int currentPosition) {
+        startService(MusicPlayerService.
+                getPlaySongIntent(this, songs, currentPosition));
     }
 }
