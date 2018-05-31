@@ -19,4 +19,8 @@ public final class StringUtils {
         return hours > 0 ? String.format("%02d:%02d:%02d",
                 hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
     }
+
+    public static String getUriLoadMoreConvert(String hrefNext) {
+        return String.format("%s&%s=%s",hrefNext,Constant.PARAM_CLIENT_ID,BuildConfig.API_KEY);
+    }
 }
