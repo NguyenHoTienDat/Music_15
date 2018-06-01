@@ -60,6 +60,11 @@ public class MusicRepository implements MusicDataSource.RemoteDataSource,
     }
 
     @Override
+    public void getDataLoadMore(String hrefNext, MusicDataSource.FetchDataCallback callback) {
+        mMusicRemoteDataSource.getDataLoadMore(hrefNext, callback);
+    }
+
+    @Override
     public List<Genre> makeGenes() {
         return mMusicLocalDataSource.makeGenes();
     }

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.screen.BaseFragment;
-import com.framgia.dattien.musicproject.screen.genredetails.SongDetailsAdapter;
+import com.framgia.dattien.musicproject.screen.musicplay.HightLightAdapter;
 import com.framgia.dattien.musicproject.utils.Constant;
 
 import java.util.List;
@@ -23,15 +23,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class SongsFragment extends BaseFragment
-        implements SongDetailsAdapter.OnSongDetailsItemClickListener {
+        implements HightLightAdapter.OnSongDetailsItemClickListener {
     public static final String SONGS_FRAGMENT_TAG = "SONGS_FRAGMENT_TAG";
 
     private static SongsFragment mNewInstance;
 
     private OnSongsFragmentListener mOnSongsFragmentListener;
     private RecyclerView mRecyclerViewSongs;
-    private LinearLayoutManager mLayoutManager;
-    private SongDetailsAdapter mSongAdapter;
+    private HightLightAdapter mSongAdapter;
     private List<Song> mSongs;
     private int mCurrentSongPosition;
     private int mPreviousDrawedPosition;
@@ -86,12 +85,10 @@ public class SongsFragment extends BaseFragment
     }
 
     public void initComponents() {
-        mSongAdapter = new SongDetailsAdapter(getContext(),
+        mSongAdapter = new HightLightAdapter(getContext(),
                 mSongs, this);
-        mSongAdapter.updateDrawItem(mCurrentSongPosition);
+        mSongAdapter.updateCurrentHightLight(mCurrentSongPosition);
         mRecyclerViewSongs.setAdapter(mSongAdapter);
-        mLayoutManager =
-                ((LinearLayoutManager) mRecyclerViewSongs.getLayoutManager());
     }
 
     /**
@@ -109,7 +106,7 @@ public class SongsFragment extends BaseFragment
      * Draw and remove highlight for item
      */
     public void updateDrawedItem() {
-        mSongAdapter.updateDrawItem(mCurrentSongPosition);
+        mSongAdapter.updateCurrentHightLight(mCurrentSongPosition);
     }
 
     public void setOnSongsFragmentListener(OnSongsFragmentListener onSongsFragmentListener) {

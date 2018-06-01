@@ -3,6 +3,7 @@ package com.framgia.dattien.musicproject.screen.genredetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Genre;
 import com.framgia.dattien.musicproject.data.model.Song;
@@ -26,9 +28,10 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GenreActivity extends BasicActivity implements GenreContract.View,
-        SongDetailsAdapter.OnSongDetailsItemClickListener, View.OnClickListener {
+        BaseSongAdapter.OnSongDetailsItemClickListener , View.OnClickListener {
 
     private static final String ARGUMENT_GENRE = "ARGUMENT_GENRE";
+    private static final int DEFAULT_POSITION = 0;
 
     private ImageView mImageGenre;
     private ImageView mImageBack;
@@ -37,7 +40,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
 
     private Genre mGenre;
     private GenreContract.Presenter mPresenter;
-    private SongDetailsAdapter mSongAdapter;
+    private SongLoadMoreAdapter mSongAdapter;
     private List<Song> mSongs;
 
     public static Intent getGenreIntent(Context context, Genre genre) {
@@ -57,9 +60,8 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
         MusicRepository musicRepository =
                 MusicRepository.getInstance(MusicLocalDataSource.getInstance(this),
                         MusicRemoteDataSource.getInstance(this));
-
-        initComponents();
         initPresenter(musicRepository);
+        initComponents();
     }
 
     @Override
@@ -92,6 +94,7 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     @Override
     public void updateSongsByGenre(List<Song> songs) {
         mSongAdapter.updateData(songs);
+        showLoadMoreProgress();
         mSongs = songs;
     }
 
@@ -101,9 +104,19 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     }
 
     @Override
+    public void showLoadMoreProgress() {
+        hideLoadMoreProgress();
+        mSongAdapter.addLoadMoreItem();
+    }
+
+    @Override
+    public void hideLoadMoreProgress() {
+        mSongAdapter.removeLoadMoreItem();
+    }
+
+    @Override
     public void onSongItemCLick(View v, Song song, int position) {
-        playSong(mSongs, position);
-        startActivity(MusicPlayerActivity.getMusicPlayerScreenIntent(this));
+
     }
 
     @Override
@@ -119,10 +132,18 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
                 break;
 
             case R.id.text_play_genre:
+
                 break;
 
             default:
                 break;
+        }
+    }
+
+    public void beginMusicTask(int position) {
+        if (mSongs != null && mSongs.size() > 0) {
+            playSong(mSongs, position);
+            startActivity(MusicPlayerActivity.getMusicPlayerScreenIntent(this));
         }
     }
 
@@ -132,13 +153,15 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     }
 
     public void initComponents() {
-        mSongAdapter = new SongDetailsAdapter(this,
-                new ArrayList<Song>(), this);
+        mSongs = new ArrayList<>();
+        mSongAdapter = new SongLoadMoreAdapter(this,
+                mSongs, this);
+        addRecylerViewScrollListener();
         mRecyclerViewGenreSongs.setAdapter(mSongAdapter);
-
         checkNotNull(mGenre);
         Glide.with(this).load(mGenre.getGenreAvatar())
-                .placeholder(R.drawable.ic_head_phone)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_head_phone))
                 .into(mImageGenre);
     }
 
@@ -150,5 +173,21 @@ public class GenreActivity extends BasicActivity implements GenreContract.View,
     private void playSong(List<Song> songs, int currentPosition) {
         startService(MusicPlayerService.
                 getPlaySongIntent(this, songs, currentPosition));
+    }
+
+    private void addRecylerViewScrollListener() {
+        final LinearLayoutManager linearLayoutManager =
+                (LinearLayoutManager) mRecyclerViewGenreSongs.getLayoutManager();
+        mRecyclerViewGenreSongs.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                if (totalItemCount > 1 && totalItemCount <= (lastVisibleItem + 1)) {
+                    mPresenter.loadMoreData();
+                }
+            }
+        });
     }
 }

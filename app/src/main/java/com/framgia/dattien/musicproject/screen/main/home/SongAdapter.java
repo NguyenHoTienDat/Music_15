@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.screen.BaseRecyclerViewAdapter;
@@ -91,7 +92,8 @@ public class SongAdapter extends BaseRecyclerViewAdapter<SongAdapter.TopSongHold
             mTextSinger.setText(mSong.getUser().getUserName());
             mTextListenCount.setText(mSong.getPlaybackCount() + "");
             Glide.with(mContext).load(mSong.getArtworkUrl())
-                    .placeholder(R.drawable.ic_head_phone)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ic_head_phone))
                     .into(mImageSong);
         }
 

@@ -8,6 +8,7 @@ import com.framgia.dattien.musicproject.data.source.MusicDataSource;
 import com.framgia.dattien.musicproject.data.source.remote.config.GenresOperator;
 import com.framgia.dattien.musicproject.data.source.remote.config.SongOperator;
 import com.framgia.dattien.musicproject.utils.Constant;
+import com.framgia.dattien.musicproject.utils.StringUtils;
 
 /**
  * Created by tiendatbkhn on 22/05/2018.
@@ -46,5 +47,11 @@ public class MusicRemoteDataSource implements MusicDataSource.RemoteDataSource {
                 Constant.PARAM_LIMIT, limit, Constant.PARAM_OFFSET, offset);
 
         new SongOperator(callback).execute(requestUrl);
+    }
+
+    @Override
+    public void getDataLoadMore(String hrefNext, MusicDataSource.FetchDataCallback callback) {
+        String requestUrl = StringUtils.getUriLoadMoreConvert(hrefNext);
+        new GenresOperator(callback).execute(requestUrl);
     }
 }
