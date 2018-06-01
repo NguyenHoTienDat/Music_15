@@ -19,6 +19,8 @@ public interface MusicDataSource {
 
         void getSongsByFilter(String filterName, int offset,
                               int limit, FetchDataCallback callback);
+
+        void getDataLoadMore(String hrefNext, FetchDataCallback callback);
     }
 
     interface FetchDataCallback<T> {

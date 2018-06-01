@@ -21,6 +21,7 @@ public class GenrePresenter implements GenreContract.Presenter,
     private GenreContract.View mView;
     private MusicRepository mMusicRepository;
     private Genre mGenre;
+    private SongResponse mSongResponse;
     private List<Song> mCurrentSongs;
 
     public GenrePresenter(MusicRepository musicRepository) {
@@ -62,14 +63,26 @@ public class GenrePresenter implements GenreContract.Presenter,
     }
 
     @Override
+    public void loadMoreData() {
+        mView.showLoadMoreProgress();
+        if (mSongResponse.getNextHref() != null ) {
+            mMusicRepository.getDataLoadMore(mSongResponse.getNextHref(),this);
+        } else {
+            mView.hideLoadMoreProgress();
+        }
+    }
+
+    @Override
     public void onDataFetchSuccess(SongResponse data) {
         checkNotNull(data);
+        mSongResponse = data;
         mCurrentSongs = data.getSongs();
         mView.updateSongsByGenre(mCurrentSongs);
+        mView.hideLoadMoreProgress();
     }
 
     @Override
     public void onDataFetchFailed(String mes) {
-        mView.showMessage(mes);
+        mView.hideLoadMoreProgress();
     }
 }

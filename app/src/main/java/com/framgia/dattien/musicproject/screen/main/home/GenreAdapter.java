@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Genre;
 import com.framgia.dattien.musicproject.screen.BaseRecyclerViewAdapter;
@@ -84,7 +85,8 @@ public class GenreAdapter extends BaseRecyclerViewAdapter<GenreAdapter.GenreHold
             mGenre = genre;
             mTextGenreName.setText(mGenre.getGenreName());
             Glide.with(mContext).load(mGenre.getGenreAvatar())
-                    .placeholder(R.drawable.ic_head_phone)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ic_head_phone))
                     .into(mImageGenre);
         }
 

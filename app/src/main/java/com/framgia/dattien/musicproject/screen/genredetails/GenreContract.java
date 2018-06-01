@@ -21,6 +21,9 @@ public interface GenreContract {
 
         void showMessage(String message);
 
+        void showLoadMoreProgress();
+
+        void hideLoadMoreProgress();
     }
 
     interface Presenter extends BasePresenter<GenreContract.View> {
@@ -30,5 +33,7 @@ public interface GenreContract {
         void setGenre(Genre genre);
 
         List<Song> getCurrentSongs();
+
+        void loadMoreData();
     }
 }

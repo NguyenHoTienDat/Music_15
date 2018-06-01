@@ -21,13 +21,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framgia.dattien.musicproject.R;
 import com.framgia.dattien.musicproject.data.model.Song;
 import com.framgia.dattien.musicproject.screen.BasicActivity;
@@ -294,14 +294,6 @@ public class MusicPlayerActivity extends BasicActivity
         //data need to be updated once change song
         bindBaseData(mCurrentSongs.get(mCurrentSongPosition));
 
-        //data no need to be change
-        Glide.with(this)
-                .load(R.drawable.gif_playing)
-                .asGif()
-                .placeholder(R.drawable.ic_head_phone)
-                .crossFade()
-                .into(mImagePlayingGif);
-
         initBottomSheet();
     }
 
@@ -377,7 +369,8 @@ public class MusicPlayerActivity extends BasicActivity
         }
 
         Glide.with(this).load(song.getArtworkUrl())
-                .placeholder(R.drawable.ic_head_phone)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_head_phone))
                 .into(mImageSong);
 
         mTextDuration.setText(StringUtils.convertMediaTime(song.getDuration()));
