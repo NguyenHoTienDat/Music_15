@@ -32,4 +32,6 @@ public final class Constant {
     public static final String BUNDLE_MUSICS = "BUNDLE_MUSICS";
     public static final String ARGUMENT_MUSICS = "ARGUMENT_MUSICS";
     public static final String ARGUMENT_MUSIC_POSITION = "ARGUMENT_MUSIC_POSITION";
+
+    public static final String OFFLINE_SONG_STORAGE_NAME = "ProjetcMusic";
 }

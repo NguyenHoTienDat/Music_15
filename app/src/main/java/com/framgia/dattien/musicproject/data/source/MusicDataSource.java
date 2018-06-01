@@ -11,6 +11,8 @@ public interface MusicDataSource {
 
     interface LocalDataSource {
         List<Genre> makeGenes();
+
+        boolean isSongExistInStorage(int songId);
     }
 
     interface RemoteDataSource {

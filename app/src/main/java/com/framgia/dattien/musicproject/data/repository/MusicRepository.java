@@ -68,4 +68,9 @@ public class MusicRepository implements MusicDataSource.RemoteDataSource,
     public List<Genre> makeGenes() {
         return mMusicLocalDataSource.makeGenes();
     }
+
+    @Override
+    public boolean isSongExistInStorage(int songId) {
+        return mMusicLocalDataSource.isSongExistInStorage(songId);
+    }
 }

@@ -23,4 +23,33 @@ public final class StringUtils {
     public static String getUriLoadMoreConvert(String hrefNext) {
         return String.format("%s&%s=%s",hrefNext,Constant.PARAM_CLIENT_ID,BuildConfig.API_KEY);
     }
+
+    public static String getUriDownloadConvert(String originUri) {
+        return String.format("%s?%s=%s", originUri, Constant.PARAM_CLIENT_ID, BuildConfig.API_KEY);
+    }
+
+    /**
+     * Song name save in storage in format : songname_songid
+     * This method get songname from that string to show on UI
+     * @param generalSongName
+     * @return
+     */
+    public static String getSongNameOfflineConvert(String generalSongName) {
+        return generalSongName.substring(0,
+                generalSongName.lastIndexOf("_")
+        );
+    }
+
+    /**
+     * Song name save in storage in format : songname_songid
+     * This method get songid for query exist in storage
+     * @param generalSongName
+     * @return
+     */
+    public static String getSongIdOfflineConvert(String generalSongName) {
+        return generalSongName.substring(
+                generalSongName.lastIndexOf("_") + 1,
+                generalSongName.lastIndexOf(".")
+        );
+    }
 }
